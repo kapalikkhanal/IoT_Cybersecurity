@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "../lib/firebase";
+import { signOut, auth } from "../lib/firebase";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ const SignOutButton = () => {
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
-      await signOut();
+      await signOut(auth);
       router.push("/");
     } catch (error) {
       console.error("Error signing out:", error);

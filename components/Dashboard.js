@@ -113,29 +113,6 @@ const Dashboard = () => {
     return () => unsubscribe();
   }, [user]);
 
-  const toggleMotor = async () => {
-    if (readings.length > 0) {
-      const latestReading = readings[0];
-      await updateDoc(doc(db, "readings", latestReading.id), {
-        motorStatus: !motorStatus,
-      });
-    } else {
-      // Create a new reading if none exists
-      await addDoc(collection(db, "readings"), {
-        userId: user.uid,
-        timestamp: Timestamp.now(),
-        flow: flowRate,
-        tankLevel: tankLevel,
-        motorStatus: !motorStatus,
-        pressure: 2.5,
-        ph: 7.0,
-        turbidity: 1.2,
-        conductivity: 300,
-      });
-      setMotorStatus(!motorStatus);
-    }
-  };
-
   return (
     <div className="flex flex-col items-center min-h-screen bg-white text-black p-8 font-sans">
       <div className="w-full max-w-6xl">
@@ -166,7 +143,7 @@ const Dashboard = () => {
         )}
 
         {/* Main Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Tank Status */}
           <div className="border border-gray-300 p-6 rounded-xl shadow-sm">
             <h2 className="text-lg font-medium mb-2">Tank Level</h2>
